@@ -195,8 +195,8 @@ input[type=text]:focus-visible,button:focus-visible,a:focus-visible{
 }
 :root[data-theme="dark"] .btn,
 :root:not([data-theme="light"]) .btn{color:#12141d}
-.btn.ghost{background:transparent;color:var(--ink);border-color:var(--edge)}
-.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--ink-soft)}
+.btn.ghost:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
 
@@ -350,11 +350,9 @@ footer.note{
     <div class="blurb" id="blurb">Session ID: —</div>
     <div class="row">
       <button class="btn" id="copy">Copy this line</button>
-      <span class="hint">Then paste it wherever your teacher asks for it.</span>
-    </div>
-    <div class="row">
       <button class="btn ghost" id="again">Practice another set</button>
     </div>
+    <span class="hint">Then paste it wherever your teacher asks for it.</span>
   </section>
 
   <footer class="note">
