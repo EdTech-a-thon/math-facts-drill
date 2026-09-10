@@ -19,6 +19,7 @@
   --ink-soft:#59667F;
   --accent:#4B3FD6;
   --accent-soft:#E4E1FB;
+  --on-accent:#FFFFFF;
   --good:#1B7A4B;
   --good-soft:#DCF0E5;
   --alert:#B03A2E;
@@ -35,6 +36,7 @@
     --ink-soft:#98A2BA;
     --accent:#9C91FF;
     --accent-soft:#2A2550;
+    --on-accent:#12141D;
     --good:#5FD39A;
     --good-soft:#17301F;
     --alert:#FF9081;
@@ -51,6 +53,7 @@
   --ink-soft:#98A2BA;
   --accent:#9C91FF;
   --accent-soft:#2A2550;
+  --on-accent:#12141D;
   --good:#5FD39A;
   --good-soft:#17301F;
   --alert:#FF9081;
@@ -169,10 +172,8 @@ input[type=text]:focus-visible,button:focus-visible,a:focus-visible{
 }
 .setgrid button:hover{border-color:var(--accent);color:var(--accent)}
 .setgrid button[aria-pressed=true]{
-  background:var(--accent);border-color:var(--accent);color:#fff;
+  background:var(--accent);border-color:var(--accent);color:var(--on-accent);
 }
-:root[data-theme="dark"] .setgrid button[aria-pressed=true],
-:root:not([data-theme="light"]) .setgrid button[aria-pressed=true]{color:var(--card)}
 .facts{
   display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;
   min-height:2.1rem;
@@ -193,12 +194,14 @@ input[type=text]:focus-visible,button:focus-visible,a:focus-visible{
   border-radius:.45rem;
   border:1px solid var(--accent);
   background:var(--accent);
-  color:#fff;
+  color:var(--on-accent);
   cursor:pointer;
 }
-:root[data-theme="dark"] .btn,
-:root:not([data-theme="light"]) .btn{color:#12141d}
-.btn.ghost{background:var(--paper);color:var(--ink);border-color:var(--ink-soft)}
+.btn.ghost{
+  background:var(--card);
+  color:var(--ink);
+  border:2px solid var(--ink-soft);
+}
 .btn.ghost:hover{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
@@ -225,7 +228,7 @@ input[type=text]:focus-visible,button:focus-visible,a:focus-visible{
   font-size:2rem;
   font-variant-numeric:tabular-nums;
   padding:.35rem .5rem;
-  border-width:2px;
+  border:2px solid var(--ink-soft);
 }
 .hint{font-size:.8rem;color:var(--ink-soft)}
 .feedback{
