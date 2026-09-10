@@ -412,6 +412,7 @@ const SETS = [
 
 const TOTAL = 36;
 const COPIES_PER_NEW_FACT = 4;
+const MIN_REVIEW = 12;      /* oversized sets still mix in review facts */
 const REWIND = 3;
 
 const GREETINGS = [
@@ -457,29 +458,38 @@ function reviewPool(index){
 }
 
 /* Build a 36-question session: every new fact four times, the rest drawn
-   from earlier sets without repeating until the pool runs dry. */
+   from earlier sets without repeating until the pool runs dry. Sets with
+   more new facts than four copies can fit (A, K) get the largest even
+   number of copies that still leaves room for review. */
 function buildSession(index){
   const newFacts = SETS[index].facts.slice();
   const pool = reviewPool(index);
-  let items = [];
+  const n = newFacts.length;
 
-  if(newFacts.length * COPIES_PER_NEW_FACT >= TOTAL && pool.length === 0){
-    // Set A: no review facts exist yet, so cycle the new facts evenly.
-    let bag = [];
+  let copies = COPIES_PER_NEW_FACT;
+  if(pool.length === 0){
+    copies = 0;                       /* Set A: no earlier sets exist yet. */
+  } else {
+    while(copies > 1 && n * copies > TOTAL - MIN_REVIEW) copies--;
+  }
+
+  let items = [], bag = [];
+
+  if(copies === 0){
+    /* Deal the set round-robin so every fact appears, none more than one extra time. */
     while(items.length < TOTAL){
       if(bag.length === 0) bag = shuffle(newFacts.slice());
       items.push(bag.pop());
     }
-  } else {
-    newFacts.forEach(function(f){
-      for(let i = 0; i < COPIES_PER_NEW_FACT; i++) items.push(f);
-    });
-    if(items.length > TOTAL) items = shuffle(items).slice(0, TOTAL);
-    let bag = [];
-    while(items.length < TOTAL){
-      if(bag.length === 0) bag = shuffle(pool.slice());
-      items.push(bag.pop());
-    }
+    return spread(items);
+  }
+
+  newFacts.forEach(function(f){
+    for(let i = 0; i < copies; i++) items.push(f);
+  });
+  while(items.length < TOTAL){
+    if(bag.length === 0) bag = shuffle(pool.slice());
+    items.push(bag.pop());
   }
   return spread(items);
 }
@@ -495,6 +505,21 @@ function spread(items){
     out.push(pool.splice(i, 1)[0]);
     recent.push(out[out.length - 1]);
     if(recent.length > 2) recent.shift();
+  }
+  return separate(out);
+}
+
+/* The greedy pass can strand a duplicate at the tail; swap it somewhere it fits. */
+function separate(out){
+  for(let k = 1; k < out.length; k++){
+    if(out[k] !== out[k - 1]) continue;
+    for(let j = 0; j < out.length; j++){
+      if(Math.abs(j - k) < 2 || out[j] === out[k]) continue;
+      const moved = out[j], stuck = out[k];
+      const fitsAtK = out[k - 1] !== moved && (k + 1 >= out.length || out[k + 1] !== moved);
+      const fitsAtJ = (j === 0 || out[j - 1] !== stuck) && (j + 1 >= out.length || out[j + 1] !== stuck);
+      if(fitsAtK && fitsAtJ){ out[k] = moved; out[j] = stuck; break; }
+    }
   }
   return out;
 }

@@ -5,8 +5,8 @@ A single-page multiplication drill for the in-class Rocket Math routine. One fil
 ## How a session works
 
 1. Student enters a first name and taps the set they're practicing (A–V, then AA–RR).
-2. The app builds **36 questions**: every new fact in the chosen set appears **4 times**, and the remaining slots are filled with review facts drawn only from *earlier* sets — never a fact outside the sequence.
-3. Questions are mixed so repeats never land next to each other.
+2. The app builds **36 questions**: each new fact in the chosen set appears **4 times**, and the remaining slots are filled with review facts drawn only from *earlier* sets — never a fact outside the sequence. A standard 4-fact set is 16 new + 20 review.
+3. Questions are mixed so no fact ever lands next to itself.
 4. Correct → a short encouraging reply. Incorrect → the fact in a full sentence ("Ten times six is sixty."), a prompt to say it three times, then practice **resumes three questions back**. One correction per wrong answer.
 5. Typing `done` (or pressing **Finish session**) ends the drill and prints a session line the student copies:
 
@@ -27,3 +27,15 @@ Open `index.html` directly, or serve it anywhere static — Vercel, Netlify, Git
 ## Editing the fact sequence
 
 The sets live in the `SETS` array near the top of the `<script>` in `index.html`, written as `"3x4"` strings in sequence order. Add or reorder entries there; review facts are computed from whatever precedes each set.
+
+## Session composition, exactly
+
+Most sets have 2–4 new facts, so the arithmetic is simply *facts × 4 new slots*, with review filling the rest. Three situations need a rule:
+
+| Situation | Sets | What happens |
+| --- | --- | --- |
+| More new facts than four copies can fit | K (12 facts) | Copies drop to the largest number that still leaves 12 review slots — Set K runs 24 new + 12 review from Sets A–J |
+| No earlier sets to review from | A | All 36 questions come from Set A itself, each of its 15 facts 2–3 times |
+| Review pool smaller than the slots to fill | B (15 available, 24 needed), C (18 available, 20 needed) | The pool is reshuffled and reused rather than reaching outside the sequence |
+
+Every new fact in the chosen set is guaranteed to appear, and no question is ever drawn from a later set.
