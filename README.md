@@ -22,7 +22,21 @@ None is collected. The name and answers live in the browser tab only; nothing is
 
 ## Hosting
 
-Open `index.html` directly, or serve it anywhere static — Vercel, Netlify, GitHub Pages. On Vercel: import the repo, leave framework preset as "Other", no build command, output directory `./`. No config file is needed.
+Open `index.html` directly, or serve it anywhere static — Vercel, Netlify, GitHub Pages.
+
+On Vercel, `vercel.json` already sets the build command (`node build.js`) and output directory (`dist`), so importing the repo is enough. The build step exists only to inject analytics; with no token set it copies the site through unchanged.
+
+## Analytics
+
+Cloudflare Web Analytics is wired up through one environment variable:
+
+| Variable | Where | Value |
+| --- | --- | --- |
+| `CF_BEACON_TOKEN` | Vercel → Settings → Environment Variables | The token from Cloudflare → Web Analytics → your site → "Manage site" |
+
+`build.js` injects the beacon at deploy time. **If the variable isn't set, no beacon is injected at all** — so local files, GitHub Pages, and preview deploys stay analytics-free unless you opt them in. A token that isn't alphanumeric is rejected rather than written into the page.
+
+The token isn't a secret (it ships in the page source of any site using Cloudflare analytics), so the env variable is for configuration, not secrecy. Cloudflare Web Analytics is cookieless and doesn't fingerprint or identify visitors, which keeps the app's no-student-data posture intact — it counts page views, not people.
 
 ## Editing the fact sequence
 
