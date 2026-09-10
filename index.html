@@ -264,12 +264,6 @@ input[type=text]:focus-visible,button:focus-visible,a:focus-visible{
   overflow-x:auto;
   white-space:nowrap;
 }
-.formlink{
-  font-weight:600;color:var(--accent);
-  text-underline-offset:3px;
-}
-.steps{margin:0;padding-left:1.1rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:.3rem}
-.steps b{color:var(--ink)}
 footer.note{
   font-size:.78rem;color:var(--ink-soft);
   display:flex;gap:.5rem;align-items:baseline;flex-wrap:wrap;
@@ -356,13 +350,8 @@ footer.note{
     <div class="blurb" id="blurb">Session ID: —</div>
     <div class="row">
       <button class="btn" id="copy">Copy this line</button>
-      <a class="formlink" id="formlink" href="https://docs.google.com/forms/d/e/1FAIpQLSd20EKRP_cycd87L2XfaifKKuBlW-k4xr3AcqEyfKpJKQiKtg/viewform?usp=dialog" target="_blank" rel="noopener">Click this link</a>
+      <span class="hint">Then paste it wherever your teacher asks for it.</span>
     </div>
-    <ol class="steps">
-      <li>Copy the line above.</li>
-      <li>Open the form with <b>Click this link</b>.</li>
-      <li>Paste the line into the form and submit.</li>
-    </ol>
     <div class="row">
       <button class="btn ghost" id="again">Practice another set</button>
     </div>
@@ -716,7 +705,7 @@ function finish(){
 el("copy").addEventListener("click", function(){
   const text = el("blurb").textContent;
   const btn = el("copy");
-  function ok(){ btn.textContent = "Copied — now open the form"; }
+  function ok(){ btn.textContent = "Copied"; }
   try{
     navigator.clipboard.writeText(text).then(ok, selectFallback);
   }catch(err){ selectFallback(); }

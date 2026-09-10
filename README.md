@@ -8,7 +8,7 @@ A single-page multiplication drill for the in-class Rocket Math routine. One fil
 2. The app builds **36 questions**: every new fact in the chosen set appears **4 times**, and the remaining slots are filled with review facts drawn only from *earlier* sets — never a fact outside the sequence.
 3. Questions are mixed so repeats never land next to each other.
 4. Correct → a short encouraging reply. Incorrect → the fact in a full sentence ("Ten times six is sixty."), a prompt to say it three times, then practice **resumes three questions back**. One correction per wrong answer.
-5. Typing `done` (or pressing **Finish session**) ends the drill and prints the line to paste into the Google Form:
+5. Typing `done` (or pressing **Finish session**) ends the drill and prints a session line the student copies:
 
    `Session ID: T931, Name: Matt, Set: F, Questions: 36`
 
@@ -22,7 +22,7 @@ None is collected. The name and answers live in the browser tab only; nothing is
 
 ## Hosting
 
-Open `index.html` directly, or serve it anywhere static. For GitHub Pages: Settings → Pages → deploy from `main` / root.
+Open `index.html` directly, or serve it anywhere static — Vercel, Netlify, GitHub Pages. On Vercel: import the repo, leave framework preset as "Other", no build command, output directory `./`. No config file is needed.
 
 ## Editing the fact sequence
 
