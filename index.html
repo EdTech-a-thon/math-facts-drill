@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Math Facts Drill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@400;700&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#E9EDF4;
+  --card:#FFFFFF;
+  --grid:#D3DBE8;
+  --ink:#151E33;
+  --ink-soft:#59667F;
+  --accent:#4B3FD6;
+  --accent-soft:#E4E1FB;
+  --good:#1B7A4B;
+  --good-soft:#DCF0E5;
+  --alert:#B03A2E;
+  --alert-soft:#FAE3E0;
+  --edge:rgba(21,30,51,.13);
+  --shadow:0 1px 2px rgba(21,30,51,.06), 0 10px 30px rgba(21,30,51,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#10131C;
+    --card:#191E2B;
+    --grid:#262C3C;
+    --ink:#E8EBF4;
+    --ink-soft:#98A2BA;
+    --accent:#9C91FF;
+    --accent-soft:#2A2550;
+    --good:#5FD39A;
+    --good-soft:#17301F;
+    --alert:#FF9081;
+    --alert-soft:#341B1B;
+    --edge:rgba(232,235,244,.15);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#10131C;
+  --card:#191E2B;
+  --grid:#262C3C;
+  --ink:#E8EBF4;
+  --ink-soft:#98A2BA;
+  --accent:#9C91FF;
+  --accent-soft:#2A2550;
+  --good:#5FD39A;
+  --good-soft:#17301F;
+  --alert:#FF9081;
+  --alert-soft:#341B1B;
+  --edge:rgba(232,235,244,.15);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:
+    repeating-linear-gradient(to right, var(--grid) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(to bottom, var(--grid) 0 1px, transparent 1px 28px);
+  background-position:center top;
+  font-family:"Public Sans","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{
+  max-width:56rem;
+  margin:0 auto;
+  padding:1.5rem 1.25rem 3rem;
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+}
+.masthead{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.masthead h1{
+  margin:0;
+  font-family:"Archivo","Public Sans",sans-serif;
+  font-variation-settings:"wdth" 108,"wght" 700;
+  font-size:1.15rem;
+  letter-spacing:.01em;
+}
+.masthead .tag{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.7rem;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:var(--ink-soft);
+}
+
+/* session bar */
+.bar{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.4rem .9rem;
+  padding:.55rem .85rem;
+  border:1px solid var(--edge);
+  border-radius:.55rem;
+  background:var(--card);
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.78rem;
+  color:var(--ink-soft);
+}
+.bar b{color:var(--ink);font-weight:700}
+.bar .sep{width:1px;height:1rem;background:var(--edge)}
+.bar .clock{margin-left:auto;font-variant-numeric:tabular-nums}
+
+/* card */
+.card{
+  background:var(--card);
+  border:1px solid var(--edge);
+  border-radius:.9rem;
+  box-shadow:var(--shadow);
+  padding:1.75rem;
+  display:flex;
+  flex-direction:column;
+  gap:1.25rem;
+}
+.eyebrow{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;
+  color:var(--accent);
+}
+h2{
+  margin:0;
+  font-family:"Archivo","Public Sans",sans-serif;
+  font-variation-settings:"wdth" 104,"wght" 700;
+  font-size:clamp(1.35rem,3.4vw,1.9rem);
+  line-height:1.15;
+  text-wrap:balance;
+}
+p{margin:0;max-width:62ch;color:var(--ink-soft)}
+p.lead{color:var(--ink)}
+
+label.field{display:flex;flex-direction:column;gap:.35rem;max-width:22rem}
+label.field span{font-size:.82rem;font-weight:600;color:var(--ink)}
+input[type=text]{
+  font:inherit;
+  padding:.6rem .75rem;
+  color:var(--ink);
+  background:var(--paper);
+  border:1px solid var(--edge);
+  border-radius:.45rem;
+}
+input[type=text]:focus-visible,button:focus-visible,a:focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px;
+}
+
+/* set picker */
+.setgrid{display:flex;flex-wrap:wrap;gap:.35rem}
+.setgrid button{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.82rem;font-weight:700;
+  min-width:2.9rem;
+  padding:.45rem .3rem;
+  color:var(--ink);
+  background:var(--paper);
+  border:1px solid var(--edge);
+  border-radius:.4rem;
+  cursor:pointer;
+}
+.setgrid button:hover{border-color:var(--accent);color:var(--accent)}
+.setgrid button[aria-pressed=true]{
+  background:var(--accent);border-color:var(--accent);color:#fff;
+}
+:root[data-theme="dark"] .setgrid button[aria-pressed=true],
+:root:not([data-theme="light"]) .setgrid button[aria-pressed=true]{color:var(--card)}
+.facts{
+  display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;
+  min-height:2.1rem;
+}
+.facts .chip{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.8rem;
+  padding:.25rem .5rem;
+  border-radius:.35rem;
+  background:var(--accent-soft);
+  color:var(--accent);
+}
+.facts .none{font-size:.85rem;color:var(--ink-soft)}
+
+.btn{
+  font:inherit;font-weight:600;
+  padding:.6rem 1.1rem;
+  border-radius:.45rem;
+  border:1px solid var(--accent);
+  background:var(--accent);
+  color:#fff;
+  cursor:pointer;
+}
+:root[data-theme="dark"] .btn,
+:root:not([data-theme="light"]) .btn{color:#12141d}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--edge)}
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center}
+
+/* drill */
+.prompt{
+  display:flex;align-items:center;justify-content:center;
+  gap:.15em;
+  font-family:"Archivo","Public Sans",sans-serif;
+  font-variation-settings:"wdth" 112,"wght" 700;
+  font-size:clamp(3rem,13vw,6.5rem);
+  line-height:1;
+  font-variant-numeric:tabular-nums;
+  padding:.4em 0 .25em;
+  letter-spacing:-.01em;
+}
+.prompt .op{color:var(--accent);font-variation-settings:"wdth" 100,"wght" 500}
+.answerline{display:flex;gap:.6rem;align-items:center;justify-content:center;flex-wrap:wrap}
+#answer{
+  width:7.5rem;
+  text-align:center;
+  font-family:"Archivo","Public Sans",sans-serif;
+  font-variation-settings:"wdth" 110,"wght" 700;
+  font-size:2rem;
+  font-variant-numeric:tabular-nums;
+  padding:.35rem .5rem;
+  border-width:2px;
+}
+.hint{font-size:.8rem;color:var(--ink-soft)}
+.feedback{
+  min-height:4.5rem;
+  display:flex;flex-direction:column;justify-content:center;gap:.3rem;
+  padding:.75rem 1rem;
+  border-radius:.5rem;
+  border:1px solid transparent;
+  background:var(--paper);
+  text-align:center;
+}
+.feedback.good{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.feedback.fix{background:var(--alert-soft);border-color:var(--alert);color:var(--alert)}
+.feedback strong{font-size:1.05rem}
+.feedback em{font-style:normal;color:var(--ink);font-size:.9rem}
+.feedback.fix em{color:var(--ink)}
+
+/* progress comb: position only, never score */
+.comb{display:flex;gap:3px;align-items:flex-end;height:22px}
+.comb i{
+  flex:1;
+  height:9px;
+  border-radius:1px;
+  background:var(--grid);
+}
+.comb i.done{background:var(--accent);opacity:.4}
+.comb i.now{height:22px;background:var(--accent);opacity:1}
+.combline{display:flex;justify-content:space-between;font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.7rem;color:var(--ink-soft);letter-spacing:.08em}
+
+/* summary */
+.blurb{
+  font-family:"JetBrains Mono",ui-monospace,monospace;
+  font-size:.95rem;
+  padding:.9rem 1rem;
+  border:1px dashed var(--accent);
+  border-radius:.5rem;
+  background:var(--accent-soft);
+  color:var(--ink);
+  overflow-x:auto;
+  white-space:nowrap;
+}
+.formlink{
+  font-weight:600;color:var(--accent);
+  text-underline-offset:3px;
+}
+.steps{margin:0;padding-left:1.1rem;color:var(--ink-soft);display:flex;flex-direction:column;gap:.3rem}
+.steps b{color:var(--ink)}
+footer.note{
+  font-size:.78rem;color:var(--ink-soft);
+  display:flex;gap:.5rem;align-items:baseline;flex-wrap:wrap;
+}
+.hidden{display:none}
+@media (prefers-reduced-motion: no-preference){
+  .prompt,.feedback strong{animation:rise .18s ease-out}
+  @keyframes rise{from{opacity:.35;transform:translateY(3px)}to{opacity:1;transform:none}}
+}
+@media (max-width:520px){
+  .card{padding:1.15rem}
+  .wrap{padding:1rem .75rem 2rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <h1>Math Facts Drill</h1>
+    <span class="tag">Sets A–RR · 36 questions</span>
+  </div>
+
+  <div class="bar" id="bar" hidden>
+    <span><b id="barName">—</b></span>
+    <span class="sep"></span>
+    <span>Set <b id="barSet">—</b></span>
+    <span class="sep"></span>
+    <span>Question <b id="barQ">1</b> of <b id="barTotal">36</b></span>
+    <span class="clock" id="clock">0:00</span>
+  </div>
+
+  <!-- SETUP -->
+  <section class="card" id="setup">
+    <div>
+      <div class="eyebrow">Before you start</div>
+      <h2 id="greeting">Ready to practice?</h2>
+    </div>
+    <label class="field">
+      <span>Your first name</span>
+      <input type="text" id="name" autocomplete="off" spellcheck="false" placeholder="Type your name">
+    </label>
+    <div>
+      <span class="eyebrow">Which set are you practicing today?</span>
+      <div class="setgrid" id="setgrid" role="group" aria-label="Math fact set"></div>
+    </div>
+    <div>
+      <span class="eyebrow" id="factsLabel">New facts in this set</span>
+      <div class="facts" id="facts"><span class="none">Pick a set to see its new facts.</span></div>
+    </div>
+    <div class="row">
+      <button class="btn" id="start" disabled>Start practice</button>
+      <span class="hint">36 questions: the new facts, mixed in with review facts from earlier sets.</span>
+    </div>
+  </section>
+
+  <!-- DRILL -->
+  <section class="card hidden" id="drill">
+    <div class="prompt" id="prompt" aria-live="off"><span>3</span><span class="op">×</span><span>4</span></div>
+    <div class="answerline">
+      <label for="answer" class="hint">Answer</label>
+      <input type="text" id="answer" inputmode="numeric" autocomplete="off" spellcheck="false" aria-label="Your answer">
+      <span class="hint">Press <b>Enter</b></span>
+    </div>
+    <div class="feedback" id="feedback" role="status" aria-live="polite">
+      <em>Type your answer and press Enter.</em>
+    </div>
+    <div>
+      <div class="comb" id="comb"></div>
+      <div class="combline"><span>START</span><span id="combCount">1 / 36</span><span>FINISH</span></div>
+    </div>
+    <div class="row">
+      <button class="btn ghost" id="doneBtn">Finish session</button>
+      <button class="btn ghost" id="debugBtn">Show new facts (debug)</button>
+      <span class="hint">You can also type <b>done</b> or <b>debug</b> in the answer box.</span>
+    </div>
+  </section>
+
+  <!-- SUMMARY -->
+  <section class="card hidden" id="summary">
+    <div>
+      <div class="eyebrow">Session complete</div>
+      <h2 id="cheer">Great practicing today!</h2>
+    </div>
+    <div class="blurb" id="blurb">Session ID: —</div>
+    <div class="row">
+      <button class="btn" id="copy">Copy this line</button>
+      <a class="formlink" id="formlink" href="https://docs.google.com/forms/d/e/1FAIpQLSd20EKRP_cycd87L2XfaifKKuBlW-k4xr3AcqEyfKpJKQiKtg/viewform?usp=dialog" target="_blank" rel="noopener">Click this link</a>
+    </div>
+    <ol class="steps">
+      <li>Copy the line above.</li>
+      <li>Open the form with <b>Click this link</b>.</li>
+      <li>Paste the line into the form and submit.</li>
+    </ol>
+    <div class="row">
+      <button class="btn ghost" id="again">Practice another set</button>
+    </div>
+  </section>
+
+  <footer class="note">
+    <span>Nothing is saved. No names, answers, or scores leave this page — closing the tab erases the session.</span>
+  </footer>
+</div>
+
+<script>
+"use strict";
+
+/* ---------- Math fact sequence (Sets A–RR), in order ---------- */
+const SETS = [
+  ["A","1x1 2x1 1x2 3x1 1x3 4x1 5x1 1x6 6x1 1x7 7x1 1x8 8x1 1x9 9x1"],
+  ["B","2x2 2x3 3x2"],
+  ["C","2x4 4x2 2x5 5x2"],
+  ["D","2x6 6x2 2x7 7x2"],
+  ["E","2x8 8x2 2x9 9x2"],
+  ["F","3x3 3x4 4x3"],
+  ["G","3x5 5x3 3x9 9x3"],
+  ["H","3x6 6x3 4x9 9x4"],
+  ["I","3x7 7x3 5x9 9x5"],
+  ["J","3x8 8x3 6x9 9x6"],
+  ["K","0x1 1x0 0x2 2x0 0x5 5x0 0x6 6x0 0x7 7x0 0x8 8x0"],
+  ["L","7x9 9x7"],
+  ["M","4x4 4x5 5x4"],
+  ["N","8x9 9x8"],
+  ["O","4x6 6x4 4x7 7x4"],
+  ["P","5x5 4x8 8x4"],
+  ["Q","5x6 6x5 5x7 7x5"],
+  ["R","6x6 5x8 8x5"],
+  ["S","6x7 7x6"],
+  ["T","7x7 6x8 8x6"],
+  ["U","7x8 8x7"],
+  ["V","8x8 9x9"],
+  ["AA","10x1 1x10 10x10"],
+  ["BB","10x2 2x10 10x5 5x10"],
+  ["CC","10x3 3x10 10x9 9x10"],
+  ["DD","10x4 4x10 10x6 6x10"],
+  ["EE","10x7 7x10 10x8 8x10"],
+  ["FF","10x11 11x10 10x12 12x10"],
+  ["GG","11x1 1x11 11x2 2x11"],
+  ["HH","11x3 3x11 11x5 5x11"],
+  ["II","11x11 11x4 4x11"],
+  ["JJ","11x7 7x11 11x6 6x11"],
+  ["KK","11x8 8x11 11x9 9x11"],
+  ["LL","12x1 1x12 11x12 12x11"],
+  ["MM","12x12"],
+  ["NN","12x5 5x12 9x12 12x9"],
+  ["OO","12x2 2x12"],
+  ["PP","12x6 6x12 12x8 8x12"],
+  ["QQ","12x4 4x12 12x3 3x12"],
+  ["RR","12x7 7x12"]
+].map(function(s){ return { id:s[0], facts:s[1].split(" ") }; });
+
+const TOTAL = 36;
+const COPIES_PER_NEW_FACT = 4;
+const REWIND = 3;
+
+const GREETINGS = [
+  "Hi there! Ready to practice?",
+  "Welcome back — let's warm up those facts.",
+  "Good to see you! Time to practice.",
+  "Hello! Let's get some practice in.",
+  "Nice to see you — ready when you are."
+];
+const PRAISE = ["Correct!","Great job!","Yes!","Nice work!","That's it!","Exactly right!","You got it!"];
+const CLOSERS = [
+  "Great practicing today!",
+  "Nice work — you put in the reps.",
+  "Well done. That's how facts get fast.",
+  "Strong practice session!",
+  "You stuck with it. Excellent."
+];
+const WORDS = ["zero","one","two","three","four","five","six","seven","eight","nine","ten",
+  "eleven","twelve","thirteen","fourteen","fifteen","sixteen","seventeen","eighteen","nineteen","twenty"];
+
+/* Number words through twenty, numerals for 21 and above. */
+function say(n){ return n <= 20 ? WORDS[n] : String(n); }
+function factSentence(a,b){
+  const s = say(a) + " times " + say(b) + " is " + say(a*b) + ".";
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+function parse(f){ const p = f.split("x"); return [Number(p[0]), Number(p[1])]; }
+function shuffle(arr){
+  for(let i = arr.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    const t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+
+/* Review facts = every fact from earlier sets only. Never anything outside the sequence. */
+function reviewPool(index){
+  const seen = [];
+  for(let i = 0; i < index; i++){
+    SETS[i].facts.forEach(function(f){ if(seen.indexOf(f) === -1) seen.push(f); });
+  }
+  return seen;
+}
+
+/* Build a 36-question session: every new fact four times, the rest drawn
+   from earlier sets without repeating until the pool runs dry. */
+function buildSession(index){
+  const newFacts = SETS[index].facts.slice();
+  const pool = reviewPool(index);
+  let items = [];
+
+  if(newFacts.length * COPIES_PER_NEW_FACT >= TOTAL && pool.length === 0){
+    // Set A: no review facts exist yet, so cycle the new facts evenly.
+    let bag = [];
+    while(items.length < TOTAL){
+      if(bag.length === 0) bag = shuffle(newFacts.slice());
+      items.push(bag.pop());
+    }
+  } else {
+    newFacts.forEach(function(f){
+      for(let i = 0; i < COPIES_PER_NEW_FACT; i++) items.push(f);
+    });
+    if(items.length > TOTAL) items = shuffle(items).slice(0, TOTAL);
+    let bag = [];
+    while(items.length < TOTAL){
+      if(bag.length === 0) bag = shuffle(pool.slice());
+      items.push(bag.pop());
+    }
+  }
+  return spread(items);
+}
+
+/* Mix so repeats never land next to each other or fall into a pattern. */
+function spread(items){
+  const pool = shuffle(items.slice());
+  const out = [];
+  const recent = [];
+  while(pool.length){
+    let i = pool.findIndex(function(f){ return recent.indexOf(f) === -1; });
+    if(i === -1) i = 0;
+    out.push(pool.splice(i, 1)[0]);
+    recent.push(out[out.length - 1]);
+    if(recent.length > 2) recent.shift();
+  }
+  return out;
+}
+
+function sessionId(){
+  const letter = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+  return letter + String(Math.floor(Math.random() * 1000)).padStart(3, "0");
+}
+function pick(a){ return a[Math.floor(Math.random() * a.length)]; }
+
+/* ---------- State ---------- */
+const S = {
+  name: "", setIndex: -1, questions: [], i: 0, reached: 0,
+  awaitingCorrection: false, started: 0, timer: null
+};
+
+const el = function(id){ return document.getElementById(id); };
+const setupEl = el("setup"), drillEl = el("drill"), summaryEl = el("summary");
+
+/* ---------- Setup ---------- */
+el("greeting").textContent = pick(GREETINGS);
+
+const grid = el("setgrid");
+SETS.forEach(function(s, idx){
+  const b = document.createElement("button");
+  b.type = "button";
+  b.textContent = s.id;
+  b.setAttribute("aria-pressed", "false");
+  b.addEventListener("click", function(){ chooseSet(idx); });
+  grid.appendChild(b);
+});
+
+function chooseSet(idx){
+  S.setIndex = idx;
+  Array.prototype.forEach.call(grid.children, function(b, i){
+    b.setAttribute("aria-pressed", i === idx ? "true" : "false");
+  });
+  showFacts(idx, el("facts"));
+  el("factsLabel").textContent = "New facts in Set " + SETS[idx].id;
+  updateStart();
+}
+function showFacts(idx, target){
+  target.innerHTML = "";
+  SETS[idx].facts.forEach(function(f){
+    const p = parse(f);
+    const c = document.createElement("span");
+    c.className = "chip";
+    c.textContent = p[0] + " × " + p[1];
+    target.appendChild(c);
+  });
+}
+function updateStart(){
+  el("start").disabled = !(el("name").value.trim() && S.setIndex >= 0);
+}
+el("name").addEventListener("input", updateStart);
+el("name").addEventListener("keydown", function(e){
+  if(e.key === "Enter" && !el("start").disabled) startSession();
+});
+el("start").addEventListener("click", startSession);
+
+/* ---------- Drill ---------- */
+function startSession(){
+  S.name = el("name").value.trim();
+  S.questions = buildSession(S.setIndex);
+  S.i = 0; S.reached = 0; S.awaitingCorrection = false;
+  S.started = Date.now();
+
+  el("barName").textContent = S.name;
+  el("barSet").textContent = SETS[S.setIndex].id;
+  el("barTotal").textContent = String(S.questions.length);
+  el("bar").hidden = false;
+
+  buildComb(S.questions.length);
+  setupEl.classList.add("hidden");
+  summaryEl.classList.add("hidden");
+  drillEl.classList.remove("hidden");
+
+  setFeedback("", "Type your answer and press Enter.", "");
+  render();
+  clearInterval(S.timer);
+  S.timer = setInterval(tick, 1000);
+  tick();
+}
+
+function buildComb(n){
+  const comb = el("comb");
+  comb.innerHTML = "";
+  for(let i = 0; i < n; i++) comb.appendChild(document.createElement("i"));
+}
+
+function tick(){
+  const s = Math.floor((Date.now() - S.started) / 1000);
+  el("clock").textContent = Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0");
+}
+
+function render(){
+  const p = parse(S.questions[S.i]);
+  el("prompt").innerHTML = "<span>" + p[0] + "</span><span class='op'>×</span><span>" + p[1] + "</span>";
+  el("barQ").textContent = String(S.i + 1);
+  el("combCount").textContent = (S.i + 1) + " / " + S.questions.length;
+  Array.prototype.forEach.call(el("comb").children, function(t, i){
+    t.className = i === S.i ? "now" : (i < S.i ? "done" : "");
+  });
+  const a = el("answer");
+  a.value = "";
+  a.disabled = false;
+  a.focus();
+}
+
+function setFeedback(kind, main, sub){
+  const f = el("feedback");
+  f.className = "feedback" + (kind ? " " + kind : "");
+  f.innerHTML = "";
+  if(main){
+    const strong = document.createElement("strong");
+    strong.textContent = main;
+    f.appendChild(strong);
+  }
+  if(sub){
+    const em = document.createElement("em");
+    em.textContent = sub;
+    f.appendChild(em);
+  }
+}
+
+el("answer").addEventListener("keydown", function(e){
+  if(e.key !== "Enter") return;
+  e.preventDefault();
+  submit();
+});
+
+function submit(){
+  const box = el("answer");
+  const raw = box.value.trim();
+
+  /* One correction prompt per wrong answer: Enter resumes, nothing is re-asked. */
+  if(S.awaitingCorrection){
+    S.awaitingCorrection = false;
+    S.i = Math.max(0, S.i - REWIND);
+    setFeedback("", "Back up three questions. Here we go.", "");
+    render();
+    return;
+  }
+
+  const cmd = raw.toLowerCase();
+  if(cmd === "done"){ finish(); return; }
+  if(cmd === "debug"){ debugPeek(); box.value = ""; return; }
+  if(raw === "") return;
+
+  const p = parse(S.questions[S.i]);
+  const given = Number(raw);
+  if(!Number.isFinite(given)){ box.value = ""; return; }
+
+  if(given === p[0] * p[1]){
+    S.reached = Math.max(S.reached, S.i + 1);
+    if(S.i + 1 >= S.questions.length){ setFeedback("good", pick(PRAISE), ""); finish(); return; }
+    S.i++;
+    setFeedback("good", pick(PRAISE), "");
+    render();
+  } else {
+    S.awaitingCorrection = true;
+    box.value = "";
+    box.disabled = true;
+    setFeedback("fix", factSentence(p[0], p[1]), "Say it to yourself three times, then press Enter to keep going.");
+    /* Keep Enter working while the answer box is disabled. */
+    window.addEventListener("keydown", resumeOnce);
+  }
+}
+
+function resumeOnce(e){
+  if(e.key !== "Enter" || !S.awaitingCorrection) return;
+  e.preventDefault();
+  window.removeEventListener("keydown", resumeOnce);
+  S.awaitingCorrection = false;
+  S.i = Math.max(0, S.i - REWIND);
+  setFeedback("", "Back up three questions. Here we go.", "");
+  render();
+}
+
+function debugPeek(){
+  const s = SETS[S.setIndex];
+  const list = s.facts.map(function(f){ const p = parse(f); return p[0] + "×" + p[1]; }).join(", ");
+  setFeedback("", "Debug — Set " + s.id + " new facts: " + list,
+    "These are in this round: each one appears " + COPIES_PER_NEW_FACT + " times among the " + S.questions.length + " questions.");
+  el("answer").focus();
+}
+el("debugBtn").addEventListener("click", function(){ if(!S.awaitingCorrection) debugPeek(); });
+el("doneBtn").addEventListener("click", finish);
+
+/* ---------- Summary ---------- */
+function finish(){
+  clearInterval(S.timer);
+  window.removeEventListener("keydown", resumeOnce);
+  S.awaitingCorrection = false;
+  const asked = Math.max(S.reached, 0);
+  el("cheer").textContent = pick(CLOSERS);
+  el("blurb").textContent =
+    "Session ID: " + sessionId() +
+    ", Name: " + S.name +
+    ", Set: " + SETS[S.setIndex].id +
+    ", Questions: " + asked;
+  drillEl.classList.add("hidden");
+  el("bar").hidden = true;
+  summaryEl.classList.remove("hidden");
+  el("copy").textContent = "Copy this line";
+  el("copy").focus();
+}
+
+el("copy").addEventListener("click", function(){
+  const text = el("blurb").textContent;
+  const btn = el("copy");
+  function ok(){ btn.textContent = "Copied — now open the form"; }
+  try{
+    navigator.clipboard.writeText(text).then(ok, selectFallback);
+  }catch(err){ selectFallback(); }
+  function selectFallback(){
+    const r = document.createRange();
+    r.selectNodeContents(el("blurb"));
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(r);
+    btn.textContent = "Copy it with Ctrl+C (⌘C)";
+  }
+});
+
+el("again").addEventListener("click", function(){
+  summaryEl.classList.add("hidden");
+  setupEl.classList.remove("hidden");
+  el("greeting").textContent = pick(GREETINGS);
+  el("name").value = "";
+  S.setIndex = -1;
+  Array.prototype.forEach.call(grid.children, function(b){ b.setAttribute("aria-pressed", "false"); });
+  el("factsLabel").textContent = "New facts in this set";
+  el("facts").innerHTML = "<span class='none'>Pick a set to see its new facts.</span>";
+  updateStart();
+  el("name").focus();
+});
+</script>
+</body>
+</html>

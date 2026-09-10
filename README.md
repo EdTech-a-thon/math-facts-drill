@@ -1,0 +1,29 @@
+# Math Facts Drill
+
+A single-page multiplication drill for the in-class Rocket Math routine. One file, no build step, no server, no database.
+
+## How a session works
+
+1. Student enters a first name and taps the set they're practicing (A–V, then AA–RR).
+2. The app builds **36 questions**: every new fact in the chosen set appears **4 times**, and the remaining slots are filled with review facts drawn only from *earlier* sets — never a fact outside the sequence.
+3. Questions are mixed so repeats never land next to each other.
+4. Correct → a short encouraging reply. Incorrect → the fact in a full sentence ("Ten times six is sixty."), a prompt to say it three times, then practice **resumes three questions back**. One correction per wrong answer.
+5. Typing `done` (or pressing **Finish session**) ends the drill and prints the line to paste into the Google Form:
+
+   `Session ID: T931, Name: Matt, Set: F, Questions: 36`
+
+Typing `debug` shows the current set's new facts and confirms they're in the round.
+
+No mastery, no scoring, no progress tracking — the app only facilitates the timed practice.
+
+## Student data
+
+None is collected. The name and answers live in the browser tab only; nothing is written to a server, a database, or even browser storage. Closing the tab erases the session, so no PINs or logins are needed.
+
+## Hosting
+
+Open `index.html` directly, or serve it anywhere static. For GitHub Pages: Settings → Pages → deploy from `main` / root.
+
+## Editing the fact sequence
+
+The sets live in the `SETS` array near the top of the `<script>` in `index.html`, written as `"3x4"` strings in sequence order. Add or reorder entries there; review facts are computed from whatever precedes each set.
