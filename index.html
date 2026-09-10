@@ -342,8 +342,7 @@ footer.note{
     </div>
     <div class="row">
       <button class="btn ghost" id="doneBtn">Finish session</button>
-      <button class="btn ghost" id="debugBtn">Show new facts (debug)</button>
-      <span class="hint">You can also type <b>done</b> or <b>debug</b> in the answer box.</span>
+      <span class="hint">You can also type <b>done</b> in the answer box.</span>
     </div>
   </section>
 
@@ -702,6 +701,7 @@ function resumeOnce(e){
   render();
 }
 
+/* Teacher check, unlisted: typing "debug" in the answer box shows the set's new facts. */
 function debugPeek(){
   const s = SETS[S.setIndex];
   const list = s.facts.map(function(f){ const p = parse(f); return p[0] + "×" + p[1]; }).join(", ");
@@ -709,7 +709,6 @@ function debugPeek(){
     "These are in this round: each one appears " + COPIES_PER_NEW_FACT + " times among the " + S.questions.length + " questions.");
   el("answer").focus();
 }
-el("debugBtn").addEventListener("click", function(){ if(!S.awaitingCorrection) debugPeek(); });
 el("doneBtn").addEventListener("click", finish);
 
 /* ---------- Summary ---------- */

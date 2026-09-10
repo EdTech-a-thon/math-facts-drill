@@ -12,7 +12,7 @@ A single-page multiplication drill for the in-class Rocket Math routine. One fil
 
    `Session ID: T931, Name: Matt, Set: F, Questions: 36`
 
-Typing `debug` shows the current set's new facts and confirms they're in the round.
+Typing `debug` in the answer box shows the current set's new facts and confirms they're in the round. It's unlisted — there's no button and nothing on screen mentions it.
 
 No mastery, no scoring, no progress tracking — the app only facilitates the timed practice.
 
